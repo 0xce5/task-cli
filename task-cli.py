@@ -1,21 +1,28 @@
 import sys
+import json
 
 operator = sys.argv[1]
 argument = sys.argv[2] if len(sys.argv) > 2 else None
-comment = sys.argv[3] if len(sys.argv) > 2 else None
+comment = sys.argv[3] if len(sys.argv) > 3 else None
+
+def getJson():
+    pass
+
+def createJson():
+    pass
 
 def add(argument):
-        pass
+    pass
 
 def delete(argument):
-        pass
+    pass
 
 
 def update(argument):
-        pass
+    pass
 
 def mark(argument):
-        pass
+    pass
 
 def list(argument):
     pass
