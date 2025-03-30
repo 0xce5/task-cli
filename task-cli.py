@@ -14,9 +14,9 @@ status = None
 created = str(date.today())
 updated = None
 
-def loadJson(file_path):
-    json_arr = []
+json_arr = []
 
+def loadJson(file_path):
     if not os.path.exists(file_path) or os.stat(file_path).st_size == 0:
         return json_arr
     else:
@@ -30,6 +30,8 @@ def loadJson(file_path):
         return json_arr
 
 def createJson(argument):
+    json_arr = loadJson(filepath)
+
     desc = argument
     status = 'Working'
     updated = str(date.today())
@@ -45,11 +47,11 @@ def createJson(argument):
         'desc': desc,
         'contents': content
     }
-    json_object = json.dumps(template, indent=4)
-    
 
-    with open("sample.json", "w") as outfile:
-        outfile.write(json_object)
+    json_arr.append(template)
+
+    with open("sample.json", "w") as file:
+        json.dump(json_arr, file)
 
 def add(argument):
     pass
