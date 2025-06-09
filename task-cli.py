@@ -23,7 +23,7 @@ def loadJson(file_path):
         try:
             with open(file_path, "r") as file:
                 data = json.load(file)
-                json_arr = data #if isinstance(data, list) else []
+                json_arr = data if isinstance(data, list) else [data]
         except json.JSONDecodeError:
             json_arr = []
 
@@ -54,14 +54,32 @@ def createJson(argument):
         json.dump(json_arr, file)
 
 def add(argument):
-    pass
+    json_arr = loadJson(filepath)
+    for item in json_arr:
+        if item['id'] == int(argument):
+            item['contents']['comment'] = comment
+            item['contents']['updatedAt'] = str(date.today())
+            break
+    with open("sample.json", "w") as file:
+        json.dump(json_arr, file)
 
 def delete(argument):
-    pass
+    json_arr = loadJson(filepath)
+    json_arr = [item for item in json_arr if item['id'] != int(argument)]
+    with open("sample.json", "w") as file:
+        json.dump(json_arr, file)
 
 
 def update(argument):
-    pass
+    json_arr = loadJson(filepath)
+    task_id, new_desc = argument.split(',', 1)
+    for item in json_arr:
+        if item['id'] == int(task_id):
+            item['desc'] = new_desc.strip()
+            item['contents']['updatedAt'] = str(date.today())
+            break
+    with open("sample.json", "w") as file:
+        json.dump(json_arr, file)
 
 def mark(argument):
     pass
@@ -72,7 +90,10 @@ def list(argument):
 def main():
     match operator:
         case "add":
-            createJson(argument)
+            if not os.path.exists(filepath) or os.stat(filepath).st_size == 0:
+                createJson(argument)
+            else:
+                add(argument)
         case "update":
             pass
         case "delete":
